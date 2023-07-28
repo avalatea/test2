@@ -1,0 +1,22 @@
+# This is a reusable action
+name: Log Current Branch
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get branch name
+        id: branch-name
+        run: |
+          echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+          echo ${GITHUB_REF##*/}
+      - name: Display branch name
+        run: echo "The branch is ${{ steps.branch-name.outputs.BRANCH_NAME }}"
+      - name: Set color
+        id: random-color-generator
+        run: echo "SELECTED_COLOR=green" >> "$GITHUB_OUTPUT"
+      - name: Get color
+        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
